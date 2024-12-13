@@ -1,0 +1,32 @@
+name: Repro
+
+on:
+  workflow_dispatch:
+    inputs:
+      task_definition_suffix:
+        description: "Override ECS task definition suffix to deploy e.g. -staging"
+        required: false
+        default: ""
+      region:
+        description: "Override AWS region to deploy to"
+        required: false
+        default: ""
+      image_tag:
+        description: "Override Docker image tag to deploy"
+        required: false
+        default: ""
+      ecs_cluster:
+        description: "Override ECS cluster to deploy to"
+        required: false
+        default: ""
+    workflow_run:
+      workflows: [Build]
+      types: [completed]
+      branches:
+        - sandbox
+
+jobs:
+  job-name:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'done'
